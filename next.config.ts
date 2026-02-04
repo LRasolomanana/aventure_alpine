@@ -26,7 +26,6 @@ const nextConfig: NextConfig = {
     ],
     domains: [
       "avatars.githubusercontent.com",
-      "jeromeobiols.com",
       "www.mmv.fr",
     ],
   },

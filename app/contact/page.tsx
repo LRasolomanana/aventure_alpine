@@ -9,9 +9,32 @@ import Header from "@/components/navbar";
 
 export default function ContactPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [emailError, setEmailError] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const validateEmail = (email: string): boolean => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setEmailError("");
+
+    const formData = new FormData(e.currentTarget);
+    const email = formData.get("email") as string;
+    const name = formData.get("name") as string;
+
+    // Validation de l'email
+    if (!email || !validateEmail(email)) {
+      setEmailError("Veuillez entrer une adresse email valide");
+      return;
+    }
+
+    if (!name.trim()) {
+      setEmailError("Veuillez entrer votre nom");
+      return;
+    }
+
     setIsSubmitting(true);
 
     // This is just for visual demonstration
@@ -46,6 +69,7 @@ export default function ContactPage() {
                   </Label>
                   <Input
                     id="name"
+                    name="name"
                     placeholder="Votre nom"
                     className="bg-white/10 border-white/20 text-white"
                   />
@@ -57,10 +81,14 @@ export default function ContactPage() {
                   </Label>
                   <Input
                     id="email"
+                    name="email"
                     type="email"
                     placeholder="votre@email.com"
                     className="bg-white/10 border-white/20 text-white"
                   />
+                  {emailError && (
+                    <p className="text-red-400 text-sm mt-1">{emailError}</p>
+                  )}
                 </div>
               </div>
 
@@ -70,6 +98,7 @@ export default function ContactPage() {
                 </Label>
                 <Input
                   id="subject"
+                  name="subject"
                   placeholder="Sujet de votre message"
                   className="bg-white/10 border-white/20 text-white"
                 />
@@ -81,6 +110,7 @@ export default function ContactPage() {
                 </Label>
                 <Textarea
                   id="message"
+                  name="message"
                   placeholder="Votre message..."
                   rows={6}
                   className="bg-white/10 border-white/20 text-white resize-none"
