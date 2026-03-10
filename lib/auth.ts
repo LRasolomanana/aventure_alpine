@@ -3,9 +3,8 @@ import GitHub from "next-auth/providers/github";
 import Credentials from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { prisma } from "@/lib/prisma";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 
-// Construire les providers dynamiquement pour éviter d'appeler un provider mal configuré
 const providers: any[] = [
   Credentials({
     name: "Credentials",
@@ -14,26 +13,32 @@ const providers: any[] = [
       password: { label: "Password", type: "password" },
     },
     async authorize(credentials) {
-      if (!credentials || !credentials.email || !credentials.password) {
+      // 1. Validation de la présence des identifiants
+      if (!credentials?.email || !credentials?.password) {
         return null;
       }
 
+      // 2. Recherche de l'utilisateur
       const user = await prisma.user.findUnique({
-        where: { email: credentials.email },
+        where: { email: credentials.email as string },
       });
 
-      if (!user) {
+      // 3. Vérification si l'utilisateur existe ET possède un mot de passe (cas des comptes Google/GitHub)
+      if (!user || !user.password) {
         return null;
       }
 
+      // 4. Comparaison sécurisée avec bcrypt (on force le type string)
       const passwordMatches = await bcrypt.compare(
-        credentials.password,
+        credentials.password as string,
         user.password
       );
+
       if (!passwordMatches) {
         return null;
       }
 
+      // 5. Retour des données pour la session
       return {
         id: user.id,
         name: user.name,
@@ -63,13 +68,13 @@ const authInstance = NextAuth({
   callbacks: {
     async jwt({ token, user }: { token: any; user?: any }) {
       if (user) {
-        token.id = user.id; // Ajoute l'ID au token JWT
+        token.id = user.id;
       }
       return token;
     },
     async session({ session, token }: { session: any; token: any }) {
       if (session.user) {
-        session.user.id = token.id as string; // Récupère l'ID depuis le token et l'ajoute à la session
+        session.user.id = token.id as string;
       }
       return session;
     },

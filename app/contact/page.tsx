@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import Header from "@/components/navbar";
+import ReCAPTCHA from "react-google-recaptcha";
 
 export default function ContactPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
