@@ -115,7 +115,8 @@ export default async function Home() {
             Nos activités populaires
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <Link href="/hiking" className="group">
+
+            <Link href="/explorer?category=randonnee" className="group" >
               <div className="bg-white/5 rounded-lg p-6 transition-all hover:bg-white/10">
                 <div className="w-12 h-12 bg-sky-600/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-sky-600/20 transition-colors">
                   <Mountain className="w-6 h-6 text-sky-500" />
@@ -129,7 +130,8 @@ export default async function Home() {
                 </p>
               </div>
             </Link>
-            <Link href="/climbing" className="group">
+
+            <Link href="/explorer?category=escalade" className="group">
               <div className="bg-white/5 rounded-lg p-6 transition-all hover:bg-white/10">
                 <div className="w-12 h-12 bg-sky-600/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-sky-600/20 transition-colors">
                   <Compass className="w-6 h-6 text-sky-500" />
@@ -143,7 +145,8 @@ export default async function Home() {
                 </p>
               </div>
             </Link>
-            <Link href="/ski" className="group">
+
+            <Link href="/explorer?category=ski" className="group">
               <div className="bg-white/5 rounded-lg p-6 transition-all hover:bg-white/10">
                 <div className="w-12 h-12 bg-sky-600/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-sky-600/20 transition-colors">
                   <Snowflake className="w-6 h-6 text-sky-500" />
@@ -154,6 +157,7 @@ export default async function Home() {
                 </p>
               </div>
             </Link>
+
             <Link href="/blog" className="group">
               <div className="bg-white/5 rounded-lg p-6 transition-all hover:bg-white/10">
                 <div className="w-12 h-12 bg-sky-600/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-sky-600/20 transition-colors">

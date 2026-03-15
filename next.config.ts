@@ -1,32 +1,16 @@
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
+const nextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: "https",
-        hostname: "images.unsplash.com",
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+        pathname: '**',
       },
       {
-        protocol: "https",
-        hostname: "www.google.com",
+        protocol: 'https',
+        hostname: 'www.google.com', // On ajoute ce domaine ici
+        pathname: '**',
       },
-      {
-        protocol: "https",
-        hostname: "discord.com",
-      },
-      {
-        protocol: "https",
-        hostname: "www.twitch.tv",
-      },
-      {
-        protocol: "https",
-        hostname: "github.com",
-      },
-    ],
-    domains: [
-      "avatars.githubusercontent.com",
-      "www.mmv.fr",
     ],
   },
 };

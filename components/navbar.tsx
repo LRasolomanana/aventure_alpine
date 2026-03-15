@@ -45,12 +45,6 @@ const Navbar = () => {
               Explorer
             </Link>
             <Link
-              href="/activites"
-              className="text-gray-700 dark:text-gray-300 hover:text-blue-500"
-            >
-              Activités
-            </Link>
-            <Link
               href="/contact"
               className="text-gray-700 dark:text-gray-300 hover:text-blue-500"
             >
