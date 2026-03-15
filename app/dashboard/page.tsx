@@ -12,28 +12,46 @@ import {
   Calendar,
   ArrowUpRight,
   Clock,
+  LogOut,
 } from "lucide-react";
 
 export default function DashboardPage() {
   const { data: session } = useSession();
 
   return (
-    <>
+    <div className="min-h-screen bg-slate-900">
       <Navbar />
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-8">
-        <div className="flex justify-between items-center mb-8">
+      
+      {/* pt-24 permet de laisser de la place pour la Navbar fixée en haut */}
+      <main className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 pt-24 p-8">
+        
+        {/* Header du Dashboard */}
+        <div className="flex justify-between items-center mb-12">
           <div>
             <h1 className="text-white text-3xl font-bold">Tableau de bord</h1>
             <p className="text-gray-400 mt-2">
               Bienvenue, {session?.user?.name || session?.user?.email}
             </p>
           </div>
-          <Button className="bg-sky-600 hover:bg-sky-500">
-            Nouvelle Aventure
-          </Button>
+          
+          <div className="flex items-center gap-4">
+            <Button 
+              variant="outline" 
+              className="border-slate-700 text-gray-300 hover:bg-slate-800 hover:text-white"
+              onClick={() => signOut({ callbackUrl: "/login" })}
+            >
+              <LogOut className="w-4 h-4 mr-2" />
+              Déconnexion
+            </Button>
+
+            <Button className="bg-sky-600 hover:bg-sky-500 shadow-lg shadow-sky-500/20">
+              Nouvelle Aventure
+            </Button>
+          </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        {/* Grille de Statistiques */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
           <Card className="bg-white/5 backdrop-blur-sm border-slate-700 p-6">
             <div className="flex items-center gap-4">
               <div className="p-3 bg-emerald-500/10 rounded-lg">
@@ -83,6 +101,7 @@ export default function DashboardPage() {
           </Card>
         </div>
 
+        {/* Section Principale : Aventures & Activités */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <Card className="bg-white/5 backdrop-blur-sm border-slate-700 p-6">
             <div className="flex justify-between items-center mb-6">
@@ -102,9 +121,9 @@ export default function DashboardPage() {
               {[1, 2, 3].map((_, i) => (
                 <div
                   key={i}
-                  className="flex items-center gap-4 p-4 rounded-lg bg-white/5 hover:bg-white/10 transition-colors cursor-pointer"
+                  className="flex items-center gap-4 p-4 rounded-lg bg-white/5 hover:bg-white/10 transition-colors cursor-pointer border border-transparent hover:border-white/10"
                 >
-                  <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-sky-400 to-sky-600 flex items-center justify-center">
+                  <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-sky-400 to-sky-600 flex items-center justify-center shadow-inner">
                     <Mountain className="w-6 h-6 text-white" />
                   </div>
                   <div className="flex-1">
@@ -137,10 +156,10 @@ export default function DashboardPage() {
             <div className="space-y-6">
               {[1, 2, 3, 4].map((_, i) => (
                 <div key={i} className="flex items-start gap-4">
-                  <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center flex-shrink-0">
+                  <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center flex-shrink-0 border border-white/5">
                     <Trophy className="w-4 h-4 text-amber-500" />
                   </div>
-                  <div>
+                  <div className="border-l border-slate-700 pl-4 pb-2">
                     <p className="text-white">
                       Trophée débloqué : Alpiniste Confirmé
                     </p>
@@ -151,22 +170,7 @@ export default function DashboardPage() {
             </div>
           </Card>
         </div>
-      </div>
-      {/* // <>
-    //   <Navbar />
-    //   {session?.user ? (
-    //     <>
-    //       {session?.user?.image && (
-    //         <Image src={session.user.image} width={50} height={50} alt="" />
-    //       )}
-    //       <button onClick={() => signOut()}>Logout</button>
-    //     </>
-    //   ) : (
-    //     <Link href="/login">
-    //       <button>Login</button>
-    //     </Link>
-    //   )}
-    // </> */}
-    </>
+      </main>
+    </div>
   );
 }

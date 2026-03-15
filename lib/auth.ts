@@ -59,7 +59,8 @@ if (process.env.GITHUB_ID && process.env.GITHUB_SECRET) {
 
 const authInstance = NextAuth({
   adapter: PrismaAdapter(prisma),
-  secret: process.env.NEXTAUTH_SECRET || process.env.SECRET,
+  // MODIFICATION ICI : On utilise AUTH_SECRET qui est le standard
+  secret: process.env.AUTH_SECRET, 
   session: { strategy: "jwt" },
   providers,
   pages: {
